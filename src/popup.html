@@ -1,13 +1,38 @@
 <!DOCTYPE html>
 
+<!--
+  popup.html — Extension popup UI for TurnHebrew.
+
+  This page is shown when the user clicks the TurnHebrew icon in the Chrome
+  toolbar. It has one job: display the most recently converted text that was
+  saved to Chrome sync storage by eventPage.js.
+
+  Script load order matters here:
+    1. jquery-3.6.0.min.js  — defines the global $ function used by popup.js.
+    2. eventPage.js          — re-runs the context menu registration code in the
+                               popup's window context (the service worker handles
+                               the same registration in the background; loading it
+                               here may cause harmless "duplicate ID" console
+                               errors but does not affect conversion functionality).
+    3. popup.js              — reads chrome.storage.sync and populates #hebrew.
+-->
 <html>
     <head>
         <title>Hello World</title>
+        <!-- jQuery: required by popup.js for DOM selection via $('#hebrew') -->
         <script src="jquery-3.6.0.min.js"></script>
+        <!-- Core conversion logic (also re-registers context menus in this context) -->
         <script src="eventPage.js"></script>
+        <!-- Popup-specific script: reads storage and updates the display -->
         <script src="popup.js"></script>
     </head>
     <body>
+        <!--
+          #hebrew — the single display element for this popup.
+          popup.js sets the text content of this span to whatever converted
+          string is currently stored in chrome.storage.sync['hebrew'].
+          The default content "a" is immediately overwritten by popup.js.
+        -->
         <h2><span id="hebrew">a</span></h2>
     </body>
 </html>
