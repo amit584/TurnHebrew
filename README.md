@@ -1,4 +1,4 @@
-# TurnHebrew
+# TurnHebrew  🚧 Work in Progress
 
 A Chrome extension that converts English text to Hebrew by mapping QWERTY keyboard characters to their Hebrew equivalents.
 
